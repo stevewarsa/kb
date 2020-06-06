@@ -6,8 +6,6 @@ services:
             context: server
         ports: 
             - "8081:8080"
-        networks: 
-            - backend
     client:
         stdin_open: true
         build: 
@@ -21,9 +19,4 @@ services:
         volumes: 
             - /app/node_modules
             - ./kb-client:/app
-        networks: 
-            - backend
-networks: 
-    backend:
-        driver: bridge
         
