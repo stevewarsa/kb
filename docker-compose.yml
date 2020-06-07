@@ -1,5 +1,14 @@
 version: '3.8'
 services: 
+    postgres:
+        image: 'postgres:latest'
+        ports: 
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: kbuser
+            POSTGRES_PASSWORD: kbpwd
+        volumes:
+            - pgdata:/var/lib/postgresql/data
     api:
         build: 
             dockerfile: Dockerfile
@@ -19,4 +28,6 @@ services:
         volumes: 
             - /app/node_modules
             - ./kb-client:/app
-        
+volumes: 
+    pgdata: 
+        external: true
