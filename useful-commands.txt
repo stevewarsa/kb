@@ -15,3 +15,6 @@ docker-compose down --volumes
 docker-compose down --rmi all --volumes
 
 FATAL:  data directory "/var/lib/postgresql/data" has wrong ownership HINT:  The server must be started by the user that owns the data directory
+
+# this command creates the postgres volume manually before docker-compose file is run
+docker volume create --name=pgdata
