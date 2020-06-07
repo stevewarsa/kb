@@ -1,0 +1,17 @@
+# how to connect to the running mysql container by name and open a bash command prompt
+docker exec -it docker-local-mysql bash
+
+# Once inside a container, how to logon to mysql via commandline
+mysql --host=localhost --user=root --password=root
+
+# to alter the password of a user from the mysql commandline
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'lsljs'
+
+CREATE USER 'kbuser'@'localhost' IDENTIFIED BY 'kbuser';
+GRANT ALL PRIVILEGES ON * . * TO 'kbuser'@'localhost';
+ALTER USER 'kbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'kbuser';
+
+docker-compose down --volumes
+docker-compose down --rmi all --volumes
+
+FATAL:  data directory "/var/lib/postgresql/data" has wrong ownership HINT:  The server must be started by the user that owns the data directory
