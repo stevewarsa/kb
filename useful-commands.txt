@@ -18,3 +18,18 @@ FATAL:  data directory "/var/lib/postgresql/data" has wrong ownership HINT:  The
 
 # this command creates the postgres volume manually before docker-compose file is run
 docker volume create --name=pgdata
+
+Creating Tables in Postgres:
+
+CREATE TABLE kb_entry (id SERIAL PRIMARY KEY, title VARCHAR, description VARCHAR);
+CREATE TABLE kb_tag (id SERIAL PRIMARY KEY, tag_cd VARCHAR, tag_nm VARCHAR);
+CREATE TABLE kb_tag_kb_entry (kb_id INT, tag_id INT, CONSTRAINT unq_kb_tag UNIQUE(kb_id, tag_id));
+
+psql -U kbuser
+
+Meta Commands in psql commandline:
+
+\l = List databases
+\c <db name> = Connect to databases
+\dt = List tables in the connected database
+quit = Exit the psql commandline
