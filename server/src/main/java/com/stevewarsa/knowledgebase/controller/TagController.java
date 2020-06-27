@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/tag")
+@RestController
 public class TagController {
     @Autowired
     private TagWorker tagWorker;

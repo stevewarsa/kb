@@ -12,4 +12,8 @@ export class KbService {
   public getGreeting(): Observable<any> {
     return this.httpService.get<any>('/greetings');
   }
+
+  public getTags() {
+    return this.httpService.get<any>('/getTags');
+  }
 }
