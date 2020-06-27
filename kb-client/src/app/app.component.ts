@@ -7,18 +7,20 @@ import { KbService } from './kb.service';
   styles: []
 })
 export class AppComponent implements OnInit {
-  title = 'Knowledgebase Title';
+  title = 'Tag Listing';
   body = 'Knowledgebase Body';
+  tags = [];
 
   constructor(private kbService: KbService) {}
   ngOnInit() {
     this.kbService.getTags().subscribe(tags => {
       console.log("Here are the tags from the database:");
       console.log(tags);
-      if (tags && tags.length > 0) {
-        this.title = tags[0].tagCd + '(' + tags[0].tagId + ')';
-        this.body = tags[0].tagNm;
-      }
+      this.tags = tags;
+      // if (tags && tags.length > 0) {
+      //   this.title = tags[0].tagCd + '(' + tags[0].tagId + ')';
+      //   this.body = tags[0].tagNm;
+      // }
     });
     // this.kbService.getGreeting().subscribe(greeting => {
     //   this.title = greeting.greetingsTitle;
