@@ -17,18 +17,10 @@ export class AppComponent implements OnInit {
       console.log("Here are the tags from the database:");
       console.log(tags);
       this.tags = tags;
-      // if (tags && tags.length > 0) {
-      //   this.title = tags[0].tagCd + '(' + tags[0].tagId + ')';
-      //   this.body = tags[0].tagNm;
-      // }
+    },
+error => {
+      console.log("Error in getting tags:");
+      console.log(error);
     });
-    // this.kbService.getGreeting().subscribe(greeting => {
-    //   this.title = greeting.greetingsTitle;
-    //   this.body = greeting.greetingsBody;
-    // },
-    // error => {
-    //   console.log("Here is the error back from server: ");
-    //   console.log(error);
-    // });
   }
 }
