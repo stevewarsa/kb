@@ -1,2 +1,4 @@
 data
 pgdata
+.idea/
+nginx/nginx.iml
