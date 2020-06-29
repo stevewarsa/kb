@@ -1,0 +1,16 @@
+<div class="container">
+    <button [hidden]="!showAddForm" type="button" class="btn btn-secondary mb-2" (click)="showAddForm = false"><i class="fa fa-minus-square-o"></i> Hide Add Form</button>
+    <button [hidden]="showAddForm" type="button" class="btn btn-secondary mb-2" (click)="viewAddForm()"><i class="fa fa-plus-square"></i> Show Add Form</button>
+    <form [hidden]="!showAddForm">
+        <div class="form-group">
+            <input type="text" #title class="form-control" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" rows="5" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="New/Existing Tag" [ngbTypeahead]="search">
+        </div>
+        <button type="submit" class="btn btn-primary mr-3">Add KB Entry</button> <button type="button" class="btn btn-secondary">Clear</button>
+    </form>
+</div>
