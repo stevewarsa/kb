@@ -6,6 +6,10 @@ import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MainComponent} from './main/main.component';
 import {NgbModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
+import {FormsModule} from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
     declarations: [
@@ -17,7 +21,11 @@ import {NgbModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
         AppRoutingModule,
         HttpClientModule,
         NgbModule,
-        NgbTypeaheadModule
+        NgbTypeaheadModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatChipsModule,
+        MatIconModule
     ],
     providers: [],
     bootstrap: [AppComponent]

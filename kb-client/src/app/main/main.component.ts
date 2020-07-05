@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {KbService} from "../kb.service";
-import {Tag} from "../model/tag";
 import {Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, map} from "rxjs/operators";
+import {Tag} from "src/app/model/tag";
+import {KbEntry} from "src/app/model/kbentry";
+import {KbService} from "src/app/kb.service";
 
 @Component({
     templateUrl: './main.component.html',
@@ -11,10 +12,13 @@ import {debounceTime, distinctUntilChanged, map} from "rxjs/operators";
 export class MainComponent implements OnInit {
     tags: Tag[] = [];
     showAddForm = false;
+    selectedTag = <Tag>{};
+    newKbEntry = <KbEntry>{
+        tags: []
+    };
     @ViewChild("title") titleField: ElementRef;
 
-    constructor(private kbService: KbService) {
-    }
+    constructor(private kbService: KbService) {}
 
     ngOnInit(): void {
         this.kbService.getTags().subscribe(tags => {
@@ -25,6 +29,8 @@ export class MainComponent implements OnInit {
                 console.log(error);
             });
     }
+
+    formatter = (result: Tag) => result.tagNm;
 
     search = (text$: Observable<string>) =>
         text$.pipe(
@@ -40,5 +46,18 @@ export class MainComponent implements OnInit {
         setTimeout(() => {
             this.titleField.nativeElement.focus();
         }, 100);
+    }
+
+    onSelectTypeahead(item: Tag) {
+        this.selectedTag = item;
+        this.newKbEntry.tags.push(item);
+    }
+
+    onAddKbEntry() {
+        this.kbService.addNewKbEntry(this.newKbEntry);
+    }
+
+    removeTag(tag: Tag) {
+        this.newKbEntry.tags = this.newKbEntry.tags.filter(currTag => currTag.tagId !== tag.tagId);
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Tag} from "./model/tag";
+import {Tag} from "src/app/model/tag";
+import {KbEntry} from "src/app/model/kbentry";
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,11 @@ export class KbService {
 
   constructor(private httpService:HttpClient) { }
 
-  public getGreeting() {
-    return this.httpService.get<string>('/greetings');
-  }
-
   public getTags() {
     return this.httpService.get<Tag[]>('/getTags');
+  }
+
+  public addNewKbEntry(newEntry: KbEntry) {
+    return this.httpService.post<KbEntry>('/addNewKbEntry', newEntry);
   }
 }

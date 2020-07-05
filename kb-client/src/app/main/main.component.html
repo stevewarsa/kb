@@ -3,14 +3,26 @@
     <button [hidden]="showAddForm" type="button" class="btn btn-secondary mb-2" (click)="viewAddForm()"><i class="fa fa-plus-square"></i> Show Add Form</button>
     <form [hidden]="!showAddForm">
         <div class="form-group">
-            <input type="text" #title class="form-control" placeholder="Title">
+            <input type="text" #title class="form-control" placeholder="Title"
+                   [(ngModel)]="newKbEntry.title" [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="5" placeholder="Description"></textarea>
+            <textarea class="form-control" rows="5" placeholder="Description"
+                      [(ngModel)]="newKbEntry.desc" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="New/Existing Tag" [ngbTypeahead]="search">
+            <input type="text" class="form-control" placeholder="New/Existing Tag"
+                   [ngbTypeahead]="search" [resultFormatter]="formatter" (selectItem)="onSelectTypeahead($event.item)"
+                   [ngModel]="selectedTag.tagNm" [ngModelOptions]="{standalone: true}" >
         </div>
-        <button type="submit" class="btn btn-primary mr-3">Add KB Entry</button> <button type="button" class="btn btn-secondary">Clear</button>
+        <mat-chip-list aria-label="Selected Tags">
+            <mat-chip *ngFor="let tag of newKbEntry.tags" [selectable]="false"
+                      [removable]="true" (removed)="removeTag(tag)">
+                {{tag.tagNm}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+        <button type="submit" class="btn btn-primary mr-3" (click)="onAddKbEntry()">Add KB Entry</button>
+        <button type="button" class="btn btn-secondary">Clear</button>
     </form>
 </div>
