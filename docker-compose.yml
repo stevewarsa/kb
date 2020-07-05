@@ -27,7 +27,8 @@ services:
         ports: 
             - "4200:4200"
             - "49153:49153"
-        volumes: 
+        volumes:
+            - /app/node_modules
             - ./kb-client:/app
 volumes: 
     pgdata: 

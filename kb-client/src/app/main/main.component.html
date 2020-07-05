@@ -11,12 +11,11 @@
                       [(ngModel)]="newKbEntry.desc" [ngModelOptions]="{standalone: true}"></textarea>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="New/Existing Tag"
-                   [ngbTypeahead]="search" [resultFormatter]="formatter" (selectItem)="onSelectTypeahead($event.item)"
-                   [ngModel]="selectedTag.tagNm" [ngModelOptions]="{standalone: true}" >
+            <input #tag type="text" class="form-control" placeholder="New/Existing Tag"
+                   [ngbTypeahead]="search" [resultFormatter]="formatter" (selectItem)="onSelectTypeahead($event, $event.item)" >
         </div>
         <mat-chip-list aria-label="Selected Tags">
-            <mat-chip *ngFor="let tag of newKbEntry.tags" [selectable]="false"
+            <mat-chip class="mb-3" *ngFor="let tag of newKbEntry.tags" [selectable]="false"
                       [removable]="true" (removed)="removeTag(tag)">
                 {{tag.tagNm}}
                 <mat-icon matChipRemove>cancel</mat-icon>

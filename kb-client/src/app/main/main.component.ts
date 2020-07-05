@@ -4,6 +4,7 @@ import {debounceTime, distinctUntilChanged, map} from "rxjs/operators";
 import {Tag} from "src/app/model/tag";
 import {KbEntry} from "src/app/model/kbentry";
 import {KbService} from "src/app/kb.service";
+import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     templateUrl: './main.component.html',
@@ -17,6 +18,7 @@ export class MainComponent implements OnInit {
         tags: []
     };
     @ViewChild("title") titleField: ElementRef;
+    @ViewChild("tag") tagField: ElementRef;
 
     constructor(private kbService: KbService) {}
 
@@ -37,7 +39,7 @@ export class MainComponent implements OnInit {
             debounceTime(200),
             distinctUntilChanged(),
             map(term => term.length < 1 ? []
-                : this.tags.filter(tag => tag.tagNm.indexOf(term) >= 0).slice(0, 10))
+                : this.tags.filter(tag => tag.tagNm.toUpperCase().indexOf(term.toUpperCase()) >= 0).slice(0, 10))
         )
 
     viewAddForm() {
@@ -48,13 +50,21 @@ export class MainComponent implements OnInit {
         }, 100);
     }
 
-    onSelectTypeahead(item: Tag) {
+    onSelectTypeahead($event: NgbTypeaheadSelectItemEvent, item: Tag) {
         this.selectedTag = item;
         this.newKbEntry.tags.push(item);
+        $event.preventDefault();
+        this.tagField.nativeElement.value = "";
     }
 
     onAddKbEntry() {
-        this.kbService.addNewKbEntry(this.newKbEntry);
+        this.kbService.addNewKbEntry(this.newKbEntry).subscribe(kbEntry => {
+            console.log("Here is the returned KB Entry:");
+            console.log(kbEntry);
+        },
+            () => {
+            console.log("Error adding KB Entry");
+            });
     }
 
     removeTag(tag: Tag) {
