@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Steve Warsa
  * @since 7/5/2020 5:37 AM
@@ -24,5 +26,10 @@ public class KbController {
         log.info(kbEntry.toString());
         kbWorker.saveKbEntry(kbEntry);
         return kbEntry;
+    }
+
+    @RequestMapping("/getKbEntries")
+    public List<KbEntry> getKbEntries() {
+        return kbWorker.getKbEntries();
     }
 }

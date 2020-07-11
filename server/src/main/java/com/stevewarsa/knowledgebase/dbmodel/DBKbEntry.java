@@ -65,15 +65,21 @@ public class DBKbEntry {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         DBKbEntry dbKbEntry = (DBKbEntry) o;
-        return id.equals(dbKbEntry.id) &&
-                title.equals(dbKbEntry.title) &&
-                description.equals(dbKbEntry.description) &&
-                Objects.equals(tags, dbKbEntry.tags);
+
+        if (!id.equals(dbKbEntry.id)) return false;
+        if (!title.equals(dbKbEntry.title)) return false;
+        if (!description.equals(dbKbEntry.description)) return false;
+        return tags.equals(dbKbEntry.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, tags);
+        int result = id.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + tags.hashCode();
+        return result;
     }
 }

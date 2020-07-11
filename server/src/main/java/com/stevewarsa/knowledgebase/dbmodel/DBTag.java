@@ -57,15 +57,19 @@ public class DBTag {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         DBTag dbTag = (DBTag) o;
-        return id.equals(dbTag.id) &&
-                tagCd.equals(dbTag.tagCd) &&
-                tagNm.equals(dbTag.tagNm) &&
-                Objects.equals(entries, dbTag.entries);
+
+        if (!id.equals(dbTag.id)) return false;
+        if (!tagCd.equals(dbTag.tagCd)) return false;
+        return tagNm.equals(dbTag.tagNm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagCd, tagNm, entries);
+        int result = id.hashCode();
+        result = 31 * result + tagCd.hashCode();
+        result = 31 * result + tagNm.hashCode();
+        return result;
     }
 }

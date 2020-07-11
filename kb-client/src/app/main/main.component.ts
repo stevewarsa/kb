@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Observable} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, map} from "rxjs/operators";
 import {Tag} from "src/app/model/tag";
 import {KbEntry} from "src/app/model/kbentry";
@@ -12,6 +12,7 @@ import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 })
 export class MainComponent implements OnInit {
     tags: Tag[] = [];
+    kbEntries: KbEntry[] = [];
     showAddForm = false;
     selectedTag = <Tag>{};
     newKbEntry = <KbEntry>{
@@ -23,8 +24,11 @@ export class MainComponent implements OnInit {
     constructor(private kbService: KbService) {}
 
     ngOnInit(): void {
-        this.kbService.getTags().subscribe(tags => {
-                this.tags = tags;
+        let tagsObs = this.kbService.getTags();
+        let kbsObs = this.kbService.getKbEntries();
+        forkJoin([tagsObs, kbsObs]).subscribe((response: any[]) => {
+                this.tags = response[0];
+                this.kbEntries = response[1];
             },
             error => {
                 console.log("Error in getting tags:");

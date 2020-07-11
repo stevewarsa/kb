@@ -17,4 +17,8 @@ export class KbService {
   public addNewKbEntry(newEntry: KbEntry) {
     return this.httpService.post<KbEntry>('/addNewKbEntry', newEntry);
   }
+
+  public getKbEntries() {
+    return this.httpService.get<KbEntry[]>('/getKbEntries');
+  }
 }
