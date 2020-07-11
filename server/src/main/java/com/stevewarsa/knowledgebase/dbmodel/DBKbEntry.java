@@ -2,6 +2,7 @@ package com.stevewarsa.knowledgebase.dbmodel;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Steve Warsa
@@ -14,6 +15,7 @@ public class DBKbEntry {
     private Long id;
     private String title;
     private String description;
+    private Set<DBTag> tags;
 
     @Id
     @GeneratedValue(generator = "kb_entry_generator", strategy = GenerationType.SEQUENCE)
@@ -46,6 +48,19 @@ public class DBKbEntry {
         this.description = description;
     }
 
+    @ManyToMany
+    @JoinTable(
+            name = "kb_tag_kb_entry",
+            joinColumns = @JoinColumn(name = "kb_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    public Set<DBTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<DBTag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,11 +68,12 @@ public class DBKbEntry {
         DBKbEntry dbKbEntry = (DBKbEntry) o;
         return id.equals(dbKbEntry.id) &&
                 title.equals(dbKbEntry.title) &&
-                description.equals(dbKbEntry.description);
+                description.equals(dbKbEntry.description) &&
+                Objects.equals(tags, dbKbEntry.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description);
+        return Objects.hash(id, title, description, tags);
     }
 }

@@ -2,13 +2,16 @@ package com.stevewarsa.knowledgebase.dbmodel;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "KB_TAG")
 public class DBTag {
     private Long id;
     private String tagCd;
     private String tagNm;
+    private Set<DBKbEntry> entries;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,18 +44,28 @@ public class DBTag {
         this.tagNm = tagNm;
     }
 
+    @ManyToMany(mappedBy = "tags")
+    public Set<DBKbEntry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(Set<DBKbEntry> entries) {
+        this.entries = entries;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DBTag)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         DBTag dbTag = (DBTag) o;
-        return Objects.equals(id, dbTag.id) &&
-                Objects.equals(tagCd, dbTag.tagCd) &&
-                Objects.equals(tagNm, dbTag.tagNm);
+        return id.equals(dbTag.id) &&
+                tagCd.equals(dbTag.tagCd) &&
+                tagNm.equals(dbTag.tagNm) &&
+                Objects.equals(entries, dbTag.entries);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagCd, tagNm);
+        return Objects.hash(id, tagCd, tagNm, entries);
     }
 }
