@@ -7,6 +7,7 @@ import java.util.Objects;
  * @author Steve Warsa
  * @since 7/10/2020 6:06 AM
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "KB_ENTRY")
 public class DBKbEntry {
@@ -15,7 +16,8 @@ public class DBKbEntry {
     private String description;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "kb_entry_generator", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "kb_entry_generator", sequenceName = "kb_entry_id_seq", allocationSize = 1)
     @Column(name = "ID")
     public Long getId() {
         return id;

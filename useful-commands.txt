@@ -38,4 +38,5 @@ Meta Commands in psql commandline:
 \l = List databases
 \c <db name> = Connect to databases
 \dt = List tables in the connected database
+\d <table name> = Describe table
 quit = Exit the psql commandline
