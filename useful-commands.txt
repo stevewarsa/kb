@@ -1,6 +1,7 @@
 # how to connect to the running mysql container by name and open a bash command prompt
 docker exec -it docker-local-mysql bash
 docker exec -it knowledge-base_postgres_1 bash
+docker exec -it knowledge-base_client_1 sh
 
 docker-compose build --no-cache
 docker-compose up --build
