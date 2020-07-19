@@ -65,6 +65,11 @@ export class MainComponent implements OnInit {
         this.kbService.addNewKbEntry(this.newKbEntry).subscribe(kbEntry => {
             console.log("Here is the returned KB Entry:");
             console.log(kbEntry);
+            this.kbEntries.push(kbEntry);
+            this.showAddForm = false;
+            this.newKbEntry = <KbEntry>{
+                tags: []
+            };
         },
             () => {
             console.log("Error adding KB Entry");

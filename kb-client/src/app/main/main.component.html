@@ -24,4 +24,14 @@
         <button type="submit" class="btn btn-primary mr-3" (click)="onAddKbEntry()">Add KB Entry</button>
         <button type="button" class="btn btn-secondary">Clear</button>
     </form>
+    <div [hidden]="!kbEntries || kbEntries.length === 0" class="list-group">
+        <div *ngFor="let entry of kbEntries" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{entry.title}}</h5>
+                <small class="text-muted">ID={{entry.id}}</small>
+            </div>
+            <p class="mb-1">{{entry.desc}}</p>
+            <small *ngFor="let tg of entry.tags" class="text-muted">{{tg.tagNm}} </small>
+        </div>
+    </div>
 </div>
