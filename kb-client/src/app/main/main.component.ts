@@ -11,8 +11,10 @@ import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
     styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+    filterTag: string = null;
     tags: Tag[] = [];
     kbEntries: KbEntry[] = [];
+    filteredKbEntries: KbEntry[] = [];
     showAddForm = false;
     selectedTag = <Tag>{};
     newKbEntry = <KbEntry>{
@@ -29,6 +31,7 @@ export class MainComponent implements OnInit {
         forkJoin([tagsObs, kbsObs]).subscribe((response: any[]) => {
                 this.tags = response[0];
                 this.kbEntries = response[1];
+                this.filteredKbEntries = this.kbEntries;
             },
             error => {
                 console.log("Error in getting tags:");
@@ -66,6 +69,7 @@ export class MainComponent implements OnInit {
             console.log("Here is the returned KB Entry:");
             console.log(kbEntry);
             this.kbEntries.push(kbEntry);
+            this.filteredKbEntries.push(kbEntry);
             this.showAddForm = false;
             this.newKbEntry = <KbEntry>{
                 tags: []
@@ -78,5 +82,21 @@ export class MainComponent implements OnInit {
 
     removeTag(tag: Tag) {
         this.newKbEntry.tags = this.newKbEntry.tags.filter(currTag => currTag.tagId !== tag.tagId);
+    }
+
+    onFilterTag(value: string) {
+        this.filterTag = value;
+        if (!value || value === "") {
+            this.filteredKbEntries = this.kbEntries;
+        } else {
+            this.filteredKbEntries = this.kbEntries.filter(entry => {
+                for (let tag of entry.tags) {
+                    if (tag.tagCd === value) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
     }
 }
