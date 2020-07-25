@@ -12,6 +12,7 @@ import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 })
 export class MainComponent implements OnInit {
     filterTag: string = null;
+    filterText: string = null;
     tags: Tag[] = [];
     kbEntries: KbEntry[] = [];
     filteredKbEntries: KbEntry[] = [];
@@ -98,5 +99,23 @@ export class MainComponent implements OnInit {
                 return false;
             });
         }
+    }
+
+    hasLineFeeds(desc: string) {
+        return desc && desc.indexOf('\n') >= 0;
+    }
+
+    filterItems(evt: any) {
+        let searchString = evt.target.value.toUpperCase();
+        this.filterTag = null;
+        this.filteredKbEntries = this.kbEntries.filter(kb => {
+            for (let field of ["title", "desc"]) {
+                if (kb[field] && kb[field].toUpperCase().includes(searchString)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
     }
 }
