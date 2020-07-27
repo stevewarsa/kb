@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
-
+import { QuillModule } from 'ngx-quill'
 @NgModule({
     declarations: [
         AppComponent,
@@ -25,7 +25,8 @@ import {MatIconModule} from "@angular/material/icon";
         FormsModule,
         BrowserAnimationsModule,
         MatChipsModule,
-        MatIconModule
+        MatIconModule,
+        QuillModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
-FROM node:alpine
+FROM node:12.8-alpine
+# Install bash
+RUN apk add --no-cache bash
 WORKDIR '/app'
 COPY ./package.json ./
 RUN npm install

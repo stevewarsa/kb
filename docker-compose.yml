@@ -30,6 +30,6 @@ services:
         volumes:
             - /app/node_modules
             - ./kb-client:/app
-volumes: 
+volumes:
     pgdata: 
         external: true
