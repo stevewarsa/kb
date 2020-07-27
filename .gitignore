@@ -2,3 +2,4 @@ data
 pgdata
 .idea/
 nginx/nginx.iml
+node_modules/
