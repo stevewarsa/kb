@@ -5,6 +5,17 @@ docker exec -it knowledge-base_client_1 sh
 docker-compose build --no-cache
 docker-compose up --build
 docker-compose up
+# if you get the message "docker npm WARN tar ENOSPC: no space left on device", run this command (when I ran it last time,
+# it reclaimed 28GB)
+docker system prune -af
+
+# you may get an error when running the following command:
+docker exec -it 8928375f97c4 <any program, e.g. redis-cli>
+
+# it will print this error message: the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty'
+# so run this instead (which will work):
+winpty docker exec -it 8928375f97c4 redis-cli
+
 
 # Once inside a container, how to logon to mysql via commandline
 mysql --host=localhost --user=root --password=root
